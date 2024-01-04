@@ -5,7 +5,7 @@ WORKDIR /src
 EXPOSE 80
 
 # Copy the project file and restore dependencies
-COPY ["C://ProgramData//Jenkins//.jenkins//workspace//t3//FirstRepo//WebAPI//", "./"]
+COPY ["C://ProgramData//Jenkins//.jenkins//workspace//t3//FirstRepo//WebAPI//WebAPI.csproj", "./"]
 RUN dotnet restore
 
 COPY . .

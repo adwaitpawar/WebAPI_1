@@ -5,7 +5,7 @@ WORKDIR /src
 EXPOSE 80
 
 # Copy the project file and restore dependencies
-COPY ["//WebAPI//WebAPI.csproj", "./"]
+COPY ["WebAPI.csproj", "./"]
 #COPY .WebAPI.csproj/ ./
 #COPY FirstRepo/WebAPI/WebAPI.csproj .
 RUN dotnet restore

@@ -17,7 +17,10 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '5.x'  # Adjust the version as needed
-          installation-path: ${{ github.workspace }}/.dotnet
+
+      - name: Set custom installation path
+        run: echo "DOTNET_ROOT=${{ github.workspace }}/.dotnet" >> $GITHUB_ENV
+
       - name: Build and Publish WebAPI
         run: |
           cd WebAPI_1/WebAPI
@@ -30,6 +33,4 @@ jobs:
           # Adjust the paths accordingly
           Remove-WebSite -Name 'WebAPI' -Confirm:$false
           New-WebSite -Name 'WebAPI' -Port 80 -PhysicalPath 'D:\devops\iis'
-          Copy-Item -Path './WebAPI_1/WebAPI/published/*' -Destination 'D:\devops\iis' -Recurse
-        shell: pwsh  # Use PowerShell
-
+          Copy-Item -Path './WebAPI_1/WebAPI/published/*' -Destination 'D:\devops\iis'

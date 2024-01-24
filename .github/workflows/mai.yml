@@ -17,7 +17,7 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '5.x'  # Adjust the version as needed
-
+          installation-path: ${{ github.workspace }}/.dotnet
       - name: Build and Publish WebAPI
         run: |
           cd WebAPI_1/WebAPI

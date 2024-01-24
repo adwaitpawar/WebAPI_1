@@ -1,0 +1,35 @@
+name: Deploy to IIS
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup .Net
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '5.x'  # Adjust the version as needed
+
+      - name: Build and Publish WebAPI
+        run: |
+          cd WebAPI_1/WebAPI
+          dotnet publish -c Release -o published
+        working-directory: ${{ github.workspace }}
+
+      - name: Deploy to IIS
+        run: |
+          # Assuming you have a virtual directory named 'WebAPI' in your IIS
+          # Adjust the paths accordingly
+          Remove-WebSite -Name 'WebAPI' -Confirm:$false
+          New-WebSite -Name 'WebAPI' -Port 80 -PhysicalPath 'D:\devops\iis'
+          Copy-Item -Path './WebAPI_1/WebAPI/published/*' -Destination 'D:\devops\iis' -Recurse
+        shell: pwsh  # Use PowerShell
+
